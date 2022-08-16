@@ -23,7 +23,7 @@ valera_node_t* acl_gen_object2(ClixActions action, char* t1, char* t2, ClixLexTy
   return obj;
 }
 
-void make_actionlist(valera_array_t* lexed, valera_array_t* out) {
+void make_actionlist(char* filename, valera_array_t* lexed, valera_array_t* out) {
   unsigned int idx = 0;
   
   for(int px=0, lm=valera_array_length(lexed); px<lm; px++) {
@@ -129,7 +129,11 @@ void make_actionlist(valera_array_t* lexed, valera_array_t* out) {
       }
     }else{
       if(strcmp(token, "\n")!=0) {
-        NERR("Invalid syntax");
+        //NERR("Invalid syntax");
+        clix_error(filename, line,
+                   valera_get(elem, "start")->num,
+                   valera_get(elem, "end")->num,
+                   "Invalid syntax.");
       }
     }
     

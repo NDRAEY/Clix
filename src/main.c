@@ -31,7 +31,7 @@ int main(int argc, char** argv) {
 	//VPRINTARR("Lexed: ", lexed);
 	
 	valera_array_t* actionlist = valera_array_new();
-	make_actionlist(lexed, actionlist);
+	make_actionlist(file, lexed, actionlist);
 	//VPRINTARR("Action list: ", actionlist);
 	
 	ClixContext ctx = make_context();

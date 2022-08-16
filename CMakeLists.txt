@@ -6,7 +6,7 @@ set(CMAKE_C_FLAGS "-ggdb -Wall -O0")
 
 set(OUTPUT clix)
 set(LIBFILES src/tokenizer.c src/lexer.c src/actionlist.c
-			 src/executor.c)
+			 src/executor.c src/error.c)
 set(EXTERNAL thirdparty/ValeraC/valera.c)
 
 add_executable(${OUTPUT} src/main.c ${LIBFILES} ${EXTERNAL})
