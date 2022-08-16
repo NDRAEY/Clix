@@ -9,6 +9,7 @@ void tokenize(const char* code, valera_array_t* tokenized) {
 	int idx = 0;
 	unsigned int len = strlen(code);
 	unsigned int tokenslength = strlen(TOKENS);
+	unsigned int line = 1;
 	while(idx<len) {
 		char elm = code[idx];
 		
@@ -25,6 +26,7 @@ void tokenize(const char* code, valera_array_t* tokenized) {
 				valera_node_t* obj = valera_new();
 				valera_push_string(obj, "token", collected);
 				valera_push_number(obj, "start", idx-splen);
+				valera_push_number(obj, "line", line);
 				valera_push_number(obj, "end", idx);
 				
 				valera_array_push_object(tokenized, obj);
@@ -37,6 +39,8 @@ void tokenize(const char* code, valera_array_t* tokenized) {
 			
 			char* one = malloc(1);
 			one[0] = elm;
+
+			if(elm=='\n') { line++; }
 			
 			if(elm=='\"') {
 				int starti = idx;
@@ -47,6 +51,7 @@ void tokenize(const char* code, valera_array_t* tokenized) {
 					elm = code[idx];
 					valera_array_push_number(col, elm);
 					if(elm=='\"') { idx++; break; }
+					if(elm=='\n') { line++; }
 					idx++;
 				}
 				
@@ -63,6 +68,7 @@ void tokenize(const char* code, valera_array_t* tokenized) {
 				valera_push_string(obj, "token", totstring);
 				valera_push_number(obj, "start", starti);
 				valera_push_number(obj, "end", idx);
+				valera_push_number(obj, "line", line);
 				
 				valera_array_push_object(tokenized, obj);
 				idx++; continue;
@@ -72,6 +78,7 @@ void tokenize(const char* code, valera_array_t* tokenized) {
 			valera_push_string(obj, "token", one);
 			valera_push_number(obj, "start", idx);
 			valera_push_number(obj, "end", idx+1);
+			valera_push_number(obj, "line", line);
 			
 			valera_array_push_object(tokenized, obj);
 			
@@ -107,6 +114,7 @@ void tokenize(const char* code, valera_array_t* tokenized) {
 		valera_push_string(obj, "token", collected);
 		valera_push_number(obj, "start", idx-valera_array_length(sptokens));
 		valera_push_number(obj, "end", idx);
+		valera_push_number(obj, "line", line);
 		
 		valera_array_push_object(tokenized, obj);
 		

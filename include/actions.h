@@ -8,6 +8,13 @@ typedef enum ClixActions {
   ACL_SUB,
   ACL_MUL,
   ACL_DIV,
+  ACL_SHR,
+  ACL_SHL,
+  ACL_AND,
+  ACL_OR,
+  ACL_XOR,
+  ACL_NOT,
+  ACL_IF,
   ACL_PRINT
 } ClixActions;
 

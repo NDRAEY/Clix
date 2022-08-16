@@ -21,11 +21,12 @@ int isin(const char* str, const char* dict[], unsigned int dictlen) {
   return -1;
 }
 
-valera_node_t* gen_lex_object(ClixLexType type, char* token, unsigned int start, unsigned int end) {
+valera_node_t* gen_lex_object(ClixLexType type, char* token, unsigned int start, unsigned int end, int line) {
   valera_node_t* obj = valera_new();
   valera_push_number(obj, "type", type);
   valera_push_string(obj, "token", token);
   valera_push_number(obj, "start", start);
+  valera_push_number(obj, "line", line);
   valera_push_number(obj, "end", end);
   
   return obj;
@@ -53,7 +54,8 @@ void lex(valera_array_t* tokenized, valera_array_t* out) {
           LEX_KEYWORD,
           valera_get(elem, "token")->str,
           valera_get(elem, "start")->num,
-          valera_get(elem, "end")->num
+          valera_get(elem, "end")->num,
+          valera_get(elem, "line")->num
         )
       );
       
@@ -66,7 +68,9 @@ void lex(valera_array_t* tokenized, valera_array_t* out) {
           LEX_NUMBER,
           valera_get(elem, "token")->str,
           valera_get(elem, "start")->num,
-          valera_get(elem, "end")->num
+          valera_get(elem, "end")->num,
+          valera_get(elem, "line")->num
+
         )
       );
     }else if(strlen(token)<=1 && strchr(TOKENS, token[0])) {
@@ -76,7 +80,8 @@ void lex(valera_array_t* tokenized, valera_array_t* out) {
           LEX_KEY,
           valera_get(elem, "token")->str,
           valera_get(elem, "start")->num,
-          valera_get(elem, "end")->num
+          valera_get(elem, "end")->num,
+          valera_get(elem, "line")->num
         )
       );
     }else if(token[0]=='\"' && token[strlen(token)-1]=='\"') {
@@ -89,7 +94,9 @@ void lex(valera_array_t* tokenized, valera_array_t* out) {
           LEX_STRING,
           token,
           valera_get(elem, "start")->num,
-          valera_get(elem, "end")->num
+          valera_get(elem, "end")->num,
+          valera_get(elem, "line")->num
+
         )
       );
     }else{
@@ -99,7 +106,8 @@ void lex(valera_array_t* tokenized, valera_array_t* out) {
           LEX_NAME,
           valera_get(elem, "token")->str,
           valera_get(elem, "start")->num,
-          valera_get(elem, "end")->num
+          valera_get(elem, "end")->num,
+          valera_get(elem, "line")->num
         )
       );
     }
