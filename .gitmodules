@@ -1,0 +1,3 @@
+[submodule "thirdparty/ValeraC"]
+	path = thirdparty/ValeraC
+	url = https://github.com/NDRAEY/ValeraC

@@ -1,0 +1,8 @@
+DEFINE myvar
+
+SET myvar, 5
+ADD myvar, 2
+MUL myvar, 4
+DIV myvar, 2
+
+PRINT myvar

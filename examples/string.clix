@@ -1,0 +1,5 @@
+DEFINE hay
+SET hay, 12
+PRINT hay
+ADD hay, 1
+PRINT hay
