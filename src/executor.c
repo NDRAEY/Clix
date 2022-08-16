@@ -4,11 +4,15 @@
 ClixContext make_context() {
   ClixContext obj;
   obj.variables = valera_array_new();
+  obj.cfuncs = valera_array_new();
+  obj.functions = valera_array_new();
   return obj;
 }
 
 void destroy_context(ClixContext ctx) {
   valera_array_destroy(ctx.variables);
+  valera_array_destroy(ctx.functions);
+  valera_array_destroy(ctx.cfuncs);
 }
 
 void initalize_variable(ClixContext* ctx, char* name, valera_value_t* value) {
@@ -54,7 +58,12 @@ ClixVariableType get_variable_type(ClixContext *ctx, char* name) {
 }
 
 #define NOTFOUND if(!variable_exists(ctx, vname)) { \
-  printf("\033[31mERROR\033[0m: RuntimeError: Variable '%s' was not found!\n", vname);\
+  clix_error(filename, valera_get(elem, "line")->num, -1, -1, "Variable '%s' not found!", vname); \
+  exit(1);\
+}
+
+#define NOTFOUND_(vn) if(!variable_exists(ctx, vn)) { \
+  clix_error(filename, valera_get(elem, "line")->num, -1, -1, "Variable '%s' not found!", vn); \
   exit(1);\
 }
 
@@ -63,7 +72,7 @@ ClixVariableType get_variable_type(ClixContext *ctx, char* name) {
   exit(1); \
 }
 
-void execute(ClixContext* ctx, valera_array_t* actions) {
+void execute(char* filename, ClixContext* ctx, valera_array_t* actions) {
   unsigned int idx = 0;
   unsigned int len = valera_array_length(actions);
   
@@ -132,6 +141,8 @@ void execute(ClixContext* ctx, valera_array_t* actions) {
     }else if(action==ACL_SET) {
       char* t1 = valera_get(elem, "tok1")->str;
       ClixLexType tt = valera_get(elem, "typ1")->num;
+
+      NOTFOUND_(t1);
       
       char* t2 = valera_get(elem, "tok2")->str;
       ClixLexType tk = valera_get(elem, "typ2")->num;

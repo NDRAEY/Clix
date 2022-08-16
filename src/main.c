@@ -32,10 +32,10 @@ int main(int argc, char** argv) {
 	
 	valera_array_t* actionlist = valera_array_new();
 	make_actionlist(file, lexed, actionlist);
-	//VPRINTARR("Action list: ", actionlist);
+	// VPRINTARR("Action list: ", actionlist);
 	
 	ClixContext ctx = make_context();
-	execute(&ctx, actionlist);
+	execute(file, &ctx, actionlist);
 
 	valera_array_destroy(tokenized);
 	valera_array_destroy(lexed);

@@ -12,7 +12,7 @@ unsigned int digit_count(int n) {
 
 void clix_error(char* filename, unsigned int line,
                 unsigned int hls, unsigned int hle,
-                char* msg) {
+                char* msg, ...) {
   FILE* fp = fopen(filename, "r");
   if(!fp) {
     printf("\033[31mDoubleFault\033[0m: Failed to open '%s' to extract a line.\n", filename);
@@ -29,18 +29,26 @@ void clix_error(char* filename, unsigned int line,
     linesize += lastlinesize;
   }
   
-  printf("\033[31mERROR \033[0m[%s:%d]: %s\n", filename, line, msg);
+  printf("\033[31mERROR \033[0m[%s:%d]: ", filename, line);
+  va_list vl;
+  va_start(vl, msg);
+  vprintf(msg, vl);
+  puts("");
+  va_end(vl);
+  
   printf("    %d |  %s", line, linebuf);
   
-  int hs = (linesize-lastlinesize)-hls;
-  int hlen = hle-hs;
+  if(hls!=-1 || hls!=-1) {
+    int hs = (linesize-lastlinesize)-hls;
+    int hlen = hle-hs;
   
-  printf("    ");
-  for(int _=0; _<digit_count(line); _++) printf(" ");
-  printf("    ");
-  for(int _=0; _<hs; _++) printf(" ");
-  for(int _=0; _<hlen; _++) printf("~");
-  printf("\n");
+    printf("    ");
+    for(int _=0; _<digit_count(line); _++) printf(" ");
+    printf("    ");
+    for(int _=0; _<hs; _++) printf(" ");
+    for(int _=0; _<hlen; _++) printf("~");
+    printf("\n");
+  }
   
   exit(1);
 }

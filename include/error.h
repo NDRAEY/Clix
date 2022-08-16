@@ -3,6 +3,6 @@
 
 void clix_error(char* filename, unsigned int line,
                 unsigned int hls, unsigned int hle,
-                char* msg);
+                char* msg, ...);
 
 #endif

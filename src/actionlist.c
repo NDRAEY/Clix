@@ -5,21 +5,24 @@
 #define INCORERR if(idx>=len) { NERR("Unexcepted EOF"); }
 #define CHECKCOMMA if(strcmp(valera_get(valera_array_get(lexed, idx)->obj, "token")->str, ",")!=0) { NERR("Excepted comma"); }; idx++
 
-valera_node_t* acl_gen_object(ClixActions action, char* token, ClixLexType type) {
+valera_node_t* acl_gen_object(ClixActions action, char* token, ClixLexType type, int line) {
   valera_node_t* obj = valera_new();
   valera_push_number(obj, "action", action);
   valera_push_string(obj, "token", token);
   valera_push_number(obj, "type", type);
+  valera_push_number(obj, "line", line);
   return obj;
 }
 
-valera_node_t* acl_gen_object2(ClixActions action, char* t1, char* t2, ClixLexType p1, ClixLexType p2) {
+valera_node_t* acl_gen_object2(ClixActions action, char* t1, char* t2,
+                               ClixLexType p1, ClixLexType p2, int line) {
   valera_node_t* obj = valera_new();
   valera_push_number(obj, "action", action);
   valera_push_string(obj, "tok1", t1);
   valera_push_string(obj, "tok2", t2);
   valera_push_number(obj, "typ1", p1);
   valera_push_number(obj, "typ2", p2);
+  valera_push_number(obj, "line", line);
   return obj;
 }
 
@@ -56,7 +59,7 @@ void make_actionlist(char* filename, valera_array_t* lexed, valera_array_t* out)
             valera_get(valera_array_get(lexed, idx+1)->obj, "token")->str,"\n"
            )==0) { idx++; line++; }
 
-        valera_array_push_object(out,acl_gen_object(ACL_DEFINE, deftok, lt));
+        valera_array_push_object(out,acl_gen_object(ACL_DEFINE, deftok, lt, line));
         idx++;
 
         continue;
@@ -74,11 +77,12 @@ void make_actionlist(char* filename, valera_array_t* lexed, valera_array_t* out)
         
         //printf("SET: %s -> %s\n", settok, whattok);
         
+        valera_array_push_object(out, acl_gen_object2(ACL_SET, settok, whattok, settype,
+        whattype, line));
+
         if(idx+1<len && strcmp(
            valera_get(valera_array_get(lexed, idx+1)->obj, "token")->str,"\n"
           )==0) { idx++; line++; }
-        
-        valera_array_push_object(out, acl_gen_object2(ACL_SET, settok, whattok, settype, whattype));
 
         idx++; continue;
       }else if(strcmp(token, "ADD")==0 || strcmp(token, "add")==0
@@ -105,11 +109,11 @@ void make_actionlist(char* filename, valera_array_t* lexed, valera_array_t* out)
         
         //printf("MATH: %s -> %s\n", settok, whattok);
         
+        valera_array_push_object(out, acl_gen_object2(action, settok, whattok, settype, whattype, line));
+
         if(idx+1<len && strcmp(
           valera_get(valera_array_get(lexed, idx+1)->obj, "token")->str,"\n"
           )==0) { idx++; line++; }
-        
-        valera_array_push_object(out, acl_gen_object2(action, settok, whattok, settype, whattype));
         
         idx++; continue;
       }else if(strcmp(token, "PRINT")==0 || strcmp(token, "print")==0) {
@@ -119,11 +123,11 @@ void make_actionlist(char* filename, valera_array_t* lexed, valera_array_t* out)
         ClixLexType settype = valera_get(valera_array_get(lexed, idx)->obj, "type")->num;
         idx++;
         
+        valera_array_push_object(out, acl_gen_object(ACL_PRINT, settok, settype, line));
+
         if(idx+1<len && strcmp(
           valera_get(valera_array_get(lexed, idx+1)->obj, "token")->str,"\n"
         )==0) { idx++; line++; }
-        
-        valera_array_push_object(out, acl_gen_object(ACL_PRINT, settok, settype));
         
         idx++; continue;
       }
