@@ -11,7 +11,7 @@ int main(int argc, char** argv) {
 	char* file = argv[argc-1];
 	FILE* fptr = fopen(file, "r");
 	if(!fptr) {
-		printf("\033[31mERROR\033[0m: File '%s' was not found!", file);
+		printf("\033[31mERROR\033[0m: File '%s' was not found!\n", file);
 		exit(1);
 	}
 	fseek(fptr, 0, SEEK_END);

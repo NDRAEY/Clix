@@ -1,5 +1,5 @@
-DEFINE hay
-SET hay, 12
-PRINT hay
-ADD hay, 1
-PRINT hay
+DEFINE string
+SET string, "Hello, Carol Tea!"
+PRINT string
+
+PRINT "Also you can provide string directly to PRINT statement"
