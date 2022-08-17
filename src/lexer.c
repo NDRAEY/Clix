@@ -10,9 +10,10 @@ const char* keywords[] = {
   "MUL",    "mul",
   "DIV",    "div",
   "PRINT",  "print",
+  "IF",     "if"
 };
 
-unsigned int dictlen = 14;
+unsigned int dictlen = 16;
 
 int isin(const char* str, const char* dict[], unsigned int dictlen) {
   for(unsigned int i=0; i<dictlen; i++) {
@@ -74,6 +75,17 @@ void lex(valera_array_t* tokenized, valera_array_t* out) {
         )
       );
     }else if(strlen(token)<=1 && strchr(TOKENS, token[0])) {
+      if(token[0]=='#') {
+        printf("Comment!\n");
+        
+        idx++;
+        while(token[0]!='\n') {
+          elem = valera_array_get(tokenized, idx)->obj;
+          token = valera_get(elem, "token")->str;
+          idx++;
+        }
+        continue;
+      }
       valera_array_push_object(
         out,
         gen_lex_object(

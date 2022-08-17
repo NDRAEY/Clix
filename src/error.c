@@ -19,8 +19,8 @@ void clix_error(char* filename, unsigned int line,
     exit(1);
   }
   
-  char* linebuf;
-  size_t linebuf_sz;
+  char* linebuf = NULL;
+  size_t linebuf_sz = 0;
   int linesize = getline(&linebuf, &linebuf_sz, fp);
   int lastlinesize = linesize;
   

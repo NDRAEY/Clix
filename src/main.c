@@ -28,11 +28,11 @@ int main(int argc, char** argv) {
 	
 	valera_array_t* lexed = valera_array_new();
 	lex(tokenized, lexed);
-	// VPRINTARR("Lexed: ", lexed);
+	//VPRINTARR("Lexed: ", lexed);
 	
 	valera_array_t* actionlist = valera_array_new();
 	make_actionlist(file, lexed, actionlist);
-	// VPRINTARR("Action list: ", actionlist);
+	VPRINTARR("Action list: ", actionlist);
 	
 	ClixContext ctx = make_context();
 	execute(file, &ctx, actionlist);

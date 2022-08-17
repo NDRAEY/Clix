@@ -151,6 +151,9 @@ void execute(char* filename, ClixContext* ctx, valera_array_t* actions) {
       
       if(tk==LEX_NUMBER) { valera_value_set_number(var, atoi(t2)); }
       if(tk==LEX_STRING) { valera_value_set_string(var, t2); }
+    }else{
+      printf("Unimpelemented functions found!\n");
+      exit(1);
     }
     
     idx++;

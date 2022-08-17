@@ -1,6 +1,6 @@
 DEFINE a
 SET a, 4
 
-IF a EQ 4 THEN
+IF a EQ 4
   PRINT "IS 4!"
 END

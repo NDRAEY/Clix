@@ -1,0 +1,5 @@
+DEFINE a # Defining variable a
+
+SET a, 8 # Setting variable a with value 8
+
+PRINT a  # Printing value to screen
