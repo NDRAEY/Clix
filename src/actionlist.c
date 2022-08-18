@@ -1,7 +1,7 @@
 #include "../include/global.h"
 #include <stdlib.h>
 
-#define NERR(msg) printf("\033[31mERROR\033[0m: %s\n", msg); exit(1);
+#define NERR(msg) printf("\033[31mERROR\033[0m: %s:%d %s\n", __FILE__, __LINE__, msg); exit(1);
 #define INCORERR if(idx>=len) { NERR("Unexcepted EOF"); }
 #define CHECKCOMMA if(strcmp(valera_get(valera_array_get(lexed, idx)->obj, "token")->str, ",")!=0) { NERR("Excepted comma"); }; idx++
 
@@ -130,7 +130,7 @@ void make_actionlist(char* filename, valera_array_t* lexed, valera_array_t* out)
       
         char* settok = valera_get(valera_array_get(lexed, idx)->obj, "token")->str;
         ClixLexType settype = valera_get(valera_array_get(lexed, idx)->obj, "type")->num;
-        idx++; INCORERR;
+        idx++;
         
         valera_array_push_object(out, acl_gen_object(ACL_PRINT, settok, settype, line));
         
