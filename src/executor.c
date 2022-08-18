@@ -34,11 +34,11 @@ int find_variable_idx(ClixContext* ctx, char* name) {
   return -1;
 }
 
-inline char variable_exists(ClixContext* ctx, char* name) {
+char variable_exists(ClixContext* ctx, char* name) {
   return find_variable_idx(ctx, name)<=-1?0:1;
 }
 
-inline ClixVariableType valera2clixVT(int valera_type) {
+ClixVariableType valera2clixVT(int valera_type) {
   if(valera_type==VAL_NUM) return VAR_NUMBER;
   if(valera_type==VAL_STR) return VAR_STRING;
   return -1;

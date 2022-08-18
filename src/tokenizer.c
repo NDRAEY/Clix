@@ -6,7 +6,7 @@ void tokenize(const char* code, valera_array_t* tokenized) {
 	//valera_array_t* tokenized = valera_array_new();
 	valera_array_t* sptokens  = valera_array_new();
 	
-	int idx = 0;
+	unsigned int idx = 0;
 	unsigned int len = strlen(code);
 	unsigned int tokenslength = strlen(TOKENS);
 	unsigned int line = 1;
@@ -18,7 +18,7 @@ void tokenize(const char* code, valera_array_t* tokenized) {
 		if(exists) {
 			int splen = valera_array_length(sptokens);
 			if(splen) {
-				char* collected = malloc(valera_array_join_size(sptokens, "")); // Don't forget to free it!
+				char* collected = malloc(valera_array_join_size(sptokens, "")+1); // Don't forget to free it!
 				valera_array_join(sptokens, collected, "");
 				
 				//valera_array_push_string(tokenized, collected);

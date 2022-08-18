@@ -8,6 +8,7 @@ int main(int argc, char** argv) {
 		exit(1);
 	}
 
+	char* buffer = NULL;
 	char* file = argv[argc-1];
 	FILE* fptr = fopen(file, "r");
 	if(!fptr) {
@@ -15,12 +16,18 @@ int main(int argc, char** argv) {
 		exit(1);
 	}
 	fseek(fptr, 0, SEEK_END);
-
 	int filesize = ftell(fptr);
-	char* buffer = malloc(filesize);
+	
+	buffer = malloc(filesize+1);
+	if(buffer==NULL) {
+		printf("FATAL: malloc() failed!\n");
+		exit(1);
+	}
+
 	rewind(fptr);
 
 	fread(buffer, 1, filesize, fptr);
+	fclose(fptr);
 	
 	valera_array_t* tokenized = valera_array_new();
 	tokenize(buffer, tokenized);
@@ -29,6 +36,8 @@ int main(int argc, char** argv) {
 	valera_array_t* lexed = valera_array_new();
 	lex(tokenized, lexed);
 	//VPRINTARR("Lexed: ", lexed);
+
+	free(buffer);
 	
 	valera_array_t* actionlist = valera_array_new();
 	make_actionlist(file, lexed, actionlist);
@@ -40,8 +49,6 @@ int main(int argc, char** argv) {
 	valera_array_destroy(tokenized);
 	valera_array_destroy(lexed);
 	destroy_context(ctx);
-
-	free(buffer);
 	
 	return 0;
 }

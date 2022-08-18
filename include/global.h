@@ -2,6 +2,8 @@
 #define GLOBAL_H_
 
 #include <stdio.h>
+#include <string.h>
+#include <stdarg.h>
 #include "../thirdparty/ValeraC/valera.h"
 #include "lexer.h"
 #include "tokenizer.h"
