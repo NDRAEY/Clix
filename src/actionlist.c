@@ -136,7 +136,7 @@ void make_actionlist(char* filename, valera_array_t* lexed, valera_array_t* out)
         
         idx++; continue;
       }else if(strcmp(token, "IF")==0 || strcmp(token, "if")==0){
-        printf("IFTOKEN!\n");
+        //printf("IFTOKEN!\n");
    
         idx++; INCORERR;
         char* valwhat = valera_get(valera_array_get(lexed, idx)->obj, "token")->str;
@@ -151,7 +151,7 @@ void make_actionlist(char* filename, valera_array_t* lexed, valera_array_t* out)
         ClixLexType withtype = valera_get(valera_array_get(lexed, idx)->obj, "type")->num;
         idx++; INCORERR;
       
-        printf("WHAT: %s; COMP: %s; WITH: %s\n", valwhat, valcomp, valwith);
+        //printf("WHAT: %s; COMP: %s; WITH: %s\n", valwhat, valcomp, valwith);
       
         valera_array_t* body = valera_array_new();
       
@@ -163,9 +163,9 @@ void make_actionlist(char* filename, valera_array_t* lexed, valera_array_t* out)
           valera_array_push_object(body, btok);
           idx++;
         }
-        puts("=======================================");
+        /*puts("=======================================");
         VPRINTARR("Body is: ", body);
-        puts("=======================================");
+        puts("=======================================");*/
       
         valera_array_push_object(
           out,

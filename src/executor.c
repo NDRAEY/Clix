@@ -151,6 +151,71 @@ void execute(char* filename, ClixContext* ctx, valera_array_t* actions) {
       
       if(tk==LEX_NUMBER) { valera_value_set_number(var, atoi(t2)); }
       if(tk==LEX_STRING) { valera_value_set_string(var, t2); }
+    }else if(action==ACL_IF) {
+      char* what = valera_get(elem, "tok1")->str;
+      ClixLexType wt = valera_get(elem, "typ1")->num;
+      char* comp = valera_get(elem, "tok2")->str;
+      ClixLexType wit = valera_get(elem, "typ3")->num;
+      char* with = valera_get(elem, "tok3")->str;
+      
+      NOTFOUND_(what);
+      
+      // EQ - EQUAL
+      // LESS - LESS
+      // GREATER - GREATER
+      // LEQ - LESS OR EQUAL
+      // GEQ - GREATER OR EQUAL
+      // NEQ - NOT EQUAL
+      
+      if(strcmp(comp, "EQ")==0) {
+        printf("EQ\n");
+        if(wt==LEX_NAME) {
+          ClixVariableType vtyp = get_variable_type(ctx, what);
+          if(vtyp==VAR_NUMBER) {
+            int vval = get_variable_value(ctx, what)->num;
+            
+            if(wit==LEX_NUMBER) {
+              int wval = atoi(with);
+              
+              if(vval==wval) {
+                // Execute code
+                printf("There code should be executed!\n");
+              }
+            }else if(wit==LEX_STRING){
+              clix_error(
+                filename,
+                valera_get(elem, "line")->num,
+                -1, -1,
+                "Cannot compare unsupported types: Number and String!"
+              );
+            }
+          }else if(vtyp==VAR_STRING) {
+            char* vval = get_variable_value(ctx, what)->str;
+            
+            if(wit==LEX_STRING) {
+              if(strcmp(vval, with)==0) {
+                printf("Code should be executed!\n");
+              }
+            }else if(wit==LEX_NUMBER) {
+              clix_error(
+                filename,
+                valera_get(elem, "line")->num,
+                -1, -1,
+                "Cannot compare unsupported types: String and Number!"
+              );
+            }
+          }
+        }
+      }else if(strcmp(comp, "LESS")==0) {
+        printf("LESS\n");
+      }else if(strcmp(comp, "GREATER")==0) {
+        printf("GREATER\n");
+      }else{
+        printf("Other\n");
+      }
+      
+      printf("IF is not implemented!\n");
+      exit(1);
     }else{
       printf("Unimpelemented functions found!\n");
       exit(1);
