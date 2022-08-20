@@ -4,6 +4,9 @@ Clix - the simpest portable interpreter!
 
 It uses OS' standard library and ValeraC.
 
+# Warning
+
+Clix fails on x86 systems, i'm fixing that.
 # Build
 
 Install dependcies
