@@ -10,6 +10,11 @@ Install dependcies
 ```bash
 apt install cmake clang-14 make git
 ```
+Make clang-14 visible as clang:
+```bash
+sudo ln -s /usr/bin/clang-14 /usr/bin/clang
+sudo ln -s /usr/bin/clang++-14 /usr/bin/clang++
+```
 Clone repository and build program
 ```bash
 cd ~
