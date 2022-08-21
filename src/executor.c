@@ -168,7 +168,6 @@ void execute(char* filename, ClixContext* ctx, valera_array_t* actions) {
       // NEQ - NOT EQUAL
       
       if(strcmp(comp, "EQ")==0) {
-        printf("EQ\n");
         if(wt==LEX_NAME) {
           ClixVariableType vtyp = get_variable_type(ctx, what);
           if(vtyp==VAR_NUMBER) {
@@ -188,6 +187,9 @@ void execute(char* filename, ClixContext* ctx, valera_array_t* actions) {
                 -1, -1,
                 "Cannot compare unsupported types: Number and String!"
               );
+            }else{
+              printf("[UNIMPL] Currently cannot compare variables\n");
+              exit(1);
             }
           }else if(vtyp==VAR_STRING) {
             char* vval = get_variable_value(ctx, what)->str;
@@ -203,8 +205,14 @@ void execute(char* filename, ClixContext* ctx, valera_array_t* actions) {
                 -1, -1,
                 "Cannot compare unsupported types: String and Number!"
               );
+            }else{
+              printf("[UNIMPL] Currently cannot compare variables\n");
+              exit(1);
             }
           }
+        }else{
+          printf("[UNIMPL] Numbers and strings comprasion temporaily unavailable!\nExiting...\n");
+          exit(1);
         }
       }else if(strcmp(comp, "LESS")==0) {
         printf("LESS\n");
