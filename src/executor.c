@@ -183,15 +183,12 @@ void execute(char* filename, ClixContext* ctx, valera_array_t* actions) {
                 valera_array_t* track01 = valera_array_new();
                 make_actionlist(filename, execode, track01);
                 execute(filename, ctx, track01); // SHARED CONTEXT
-                //VPRINTARR("=> ", track01);
                 valera_array_destroy(track01);
               }
             }else if(wit==LEX_STRING){
               clix_error(
-                filename,
-                valera_get(elem, "line")->num,
-                -1, -1,
-                "Cannot compare unsupported types: Number and String!"
+                filename, valera_get(elem, "line")->num,
+                -1, -1, "Cannot compare unsupported types: Number and String!"
               );
             }else{
               printf("[UNIMPL] Currently cannot compare variables\n");
@@ -204,7 +201,7 @@ void execute(char* filename, ClixContext* ctx, valera_array_t* actions) {
               if(strcmp(vval, with)==0) {
                 valera_array_t* track01 = valera_array_new();
                 make_actionlist(filename, execode, track01);
-                execute(filename, ctx, track01);
+                execute(filename, ctx, track01); // SHARED CONTEXT
                 valera_array_destroy(track01);
               }
             }else if(wit==LEX_NUMBER) {
@@ -229,6 +226,8 @@ void execute(char* filename, ClixContext* ctx, valera_array_t* actions) {
       }else if(strcmp(comp, "GREATER")==0) {
         printf("GREATER temporaily unavailable\n");
         exit(1);
+      }else if(strcmp(comp, "NEQ")==0) {
+        
       }else{
         printf("Other type - unavailable\n");
         exit(1);
