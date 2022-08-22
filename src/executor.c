@@ -157,6 +157,8 @@ void execute(char* filename, ClixContext* ctx, valera_array_t* actions) {
       char* comp = valera_get(elem, "tok2")->str;
       ClixLexType wit = valera_get(elem, "typ3")->num;
       char* with = valera_get(elem, "tok3")->str;
+
+      valera_array_t* execode = valera_get(elem, "tokens")->arr;
       
       NOTFOUND_(what);
       
@@ -178,7 +180,11 @@ void execute(char* filename, ClixContext* ctx, valera_array_t* actions) {
               
               if(vval==wval) {
                 // Execute code
-                printf("There code should be executed!\n");
+                valera_array_t* track01 = valera_array_new();
+                make_actionlist(filename, execode, track01);
+                execute(filename, ctx, track01); // SHARED CONTEXT
+                //VPRINTARR("=> ", track01);
+                valera_array_destroy(track01);
               }
             }else if(wit==LEX_STRING){
               clix_error(
@@ -197,6 +203,7 @@ void execute(char* filename, ClixContext* ctx, valera_array_t* actions) {
             if(wit==LEX_STRING) {
               if(strcmp(vval, with)==0) {
                 printf("Code should be executed!\n");
+                VPRINTARR("=> ", execode);
               }
             }else if(wit==LEX_NUMBER) {
               clix_error(
@@ -211,19 +218,22 @@ void execute(char* filename, ClixContext* ctx, valera_array_t* actions) {
             }
           }
         }else{
-          printf("[UNIMPL] Numbers and strings comprasion temporaily unavailable!\nExiting...\n");
+          printf("[UNIMPL] Number|Number and String|String comprasion temporaily unavailable!\nExiting...\n");
           exit(1);
         }
       }else if(strcmp(comp, "LESS")==0) {
-        printf("LESS\n");
+        printf("LESS temporaily unavailable\n");
+        exit(1);
       }else if(strcmp(comp, "GREATER")==0) {
-        printf("GREATER\n");
+        printf("GREATER temporaily unavailable\n");
+        exit(1);
       }else{
-        printf("Other\n");
+        printf("Other type - unavailable\n");
+        exit(1);
       }
       
-      printf("IF is not implemented!\n");
-      exit(1);
+      printf("[WARN] IF is not fully implemented!\n");
+      //exit(1);
     }else{
       printf("Unimpelemented functions found!\n");
       exit(1);
