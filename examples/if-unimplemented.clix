@@ -1,6 +1,6 @@
 DEFINE a
-SET a, 4
+SET a, "Carol"
 
-IF a EQ 4
+IF a EQ "Carol"
   PRINT "IS 4!"
 END
