@@ -27,8 +27,8 @@ int find_variable_idx(ClixContext* ctx, char* name) {
   
   for(unsigned int idx=0; idx<len; idx++) {
     char* elemname = valera_get(valera_array_get(ctx->variables, idx)->obj, "name")->str;
-    printf("> [%s] | %d | %ld | %d\n", elemname, strcmp(elemname, name), strlen(elemname));
-    printf("> [%s] | %d | %ld\n", name, strcmp(elemname, name), strlen(name));
+    // printf("> [%s] | %d | %ld | %d\n", elemname, strcmp(elemname, name), strlen(elemname));
+    // printf("> [%s] | %d | %ld\n", name, strcmp(elemname, name), strlen(name));
     if(strcmp(elemname, name)==0) {
       return idx;
     }
