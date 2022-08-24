@@ -27,6 +27,8 @@ int find_variable_idx(ClixContext* ctx, char* name) {
   
   for(unsigned int idx=0; idx<len; idx++) {
     char* elemname = valera_get(valera_array_get(ctx->variables, idx)->obj, "name")->str;
+    printf("> [%s] | %d | %ld | %d\n", elemname, strcmp(elemname, name), strlen(elemname));
+    printf("> [%s] | %d | %ld\n", name, strcmp(elemname, name), strlen(name));
     if(strcmp(elemname, name)==0) {
       return idx;
     }
@@ -86,7 +88,7 @@ void execute(char* filename, ClixContext* ctx, valera_array_t* actions) {
       valera_value_set_number(_, 0);
       initalize_variable(ctx, valera_get(elem, "token")->str, _);
       
-      //VPRINTARR("Context dump: ", ctx->variables);
+      VPRINTARR("Context dump: ", ctx->variables);
     }else if(action==ACL_ADD) {
       char* vname = valera_get(elem, "tok1")->str;
       NOTFOUND;

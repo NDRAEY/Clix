@@ -3,7 +3,6 @@
 #include <stdlib.h>
 
 void tokenize(const char* code, valera_array_t* tokenized) {
-	//valera_array_t* tokenized = valera_array_new();
 	valera_array_t* sptokens  = valera_array_new();
 	
 	unsigned int idx = 0;
@@ -19,8 +18,14 @@ void tokenize(const char* code, valera_array_t* tokenized) {
 			int splen = valera_array_length(sptokens);
 			if(splen) {
 				char* collected = malloc(valera_array_join_size(sptokens, "")+1); // Don't forget to free it!
+				if(collected==NULL) {
+					printf("error: malloc() failed! (%s:%d)\n", __FILE__, __LINE__);
+					exit(1);
+				}
 				valera_array_join(sptokens, collected, "");
 				
+				// VPRINTARR("ARR: ", sptokens);
+				// printf("Col: %s\n", collected);
 				//valera_array_push_string(tokenized, collected);
 				
 				valera_node_t* obj = valera_new();
@@ -35,10 +40,11 @@ void tokenize(const char* code, valera_array_t* tokenized) {
 					valera_array_pop(sptokens);
 				}
 			}
-			//printf(">>Pushing token: %c\n", elm);
+			// printf(">>Pushing token: %c\n", elm);
 			
-			char* one = malloc(1);
+			char* one = malloc(2);
 			one[0] = elm;
+			one[1] = '\0';
 
 			if(elm=='\n') { line++; }
 			
@@ -56,6 +62,7 @@ void tokenize(const char* code, valera_array_t* tokenized) {
 				}
 				
 				char* totstring = malloc(valera_array_length(col)+1);
+				memset(totstring, 0, valera_array_length(col)+1);
 				for(int _ = 0, len = valera_array_length(col); _<len; _++) {
 					totstring[_] = valera_array_get(col, _)->num;
 				}
@@ -82,13 +89,12 @@ void tokenize(const char* code, valera_array_t* tokenized) {
 			
 			valera_array_push_object(tokenized, obj);
 			
-			//valera_array_push_string(tokenized, one);
-			
+			//valera_array_push_string(tokenized, one);			
 		} else {
 			//printf("Pushing token: %c\n", elm);
-			#warning "Don't forget to free!"
-			char* one = malloc(1);
+			char* one = malloc(2);
 			one[0] = elm;
+			one[1] = '\0';
 			
 			/*
 			valera_node_t* obj = valera_new();
@@ -107,7 +113,7 @@ void tokenize(const char* code, valera_array_t* tokenized) {
 	}
 	
 	if(valera_array_length(sptokens)) {
-		char* collected = malloc(valera_array_join_size(sptokens, ""));
+		char* collected = malloc(valera_array_join_size(sptokens, "")+1);
 		valera_array_join(sptokens, collected, "");
 		
 		valera_node_t* obj = valera_new();
@@ -118,11 +124,9 @@ void tokenize(const char* code, valera_array_t* tokenized) {
 		
 		valera_array_push_object(tokenized, obj);
 		
-		//valera_array_push_string(tokenized, collected);
 		
 		while(valera_array_length(sptokens)) {valera_array_pop(sptokens);}
 	}
 	
 	valera_array_destroy(sptokens);
-	//return tokenized;
 }

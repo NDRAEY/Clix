@@ -186,7 +186,7 @@ void make_actionlist(char* filename, valera_array_t* lexed, valera_array_t* out)
       }
     }else{
       if(strcmp(token, "\n")!=0) {
-        //VPRINT("Error on: ", elem);
+        VPRINT("Error on: ", elem);
         clix_error(filename, line,
                    valera_get(elem, "start")->num,
                    valera_get(elem, "end")->num,

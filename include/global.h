@@ -13,5 +13,6 @@
 
 #define VPRINT(text, obj) printf(text); valera_print(obj); puts("");
 #define VPRINTARR(text, obj) printf(text); valera_array_print(obj); puts("");
+#define CHECKMEM(ptr) if(ptr==NULL) { printf("[%s:%d] fatal error: malloc() failed!", __FILE__, __LINE__); exit(1); }
 
 #endif
