@@ -17,7 +17,7 @@ int main(int argc, char** argv) {
 	fseek(fptr, 0, SEEK_END);
 	int filesize = ftell(fptr);
 	
-	char* buffer = malloc(filesize+1);
+	char* buffer = calloc(filesize+1, sizeof(char));
 	CHECKMEM(buffer);
 
 	rewind(fptr);
@@ -37,7 +37,7 @@ int main(int argc, char** argv) {
 	
 	valera_array_t* actionlist = valera_array_new();
 	make_actionlist(file, lexed, actionlist);
-	VPRINTARR("Action list: ", actionlist);
+	// VPRINTARR("Action list: ", actionlist);
 	
 	ClixContext ctx = make_context();
 	execute(file, &ctx, actionlist);

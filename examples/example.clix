@@ -6,3 +6,5 @@ MUL myvar, 4
 DIV myvar, 2
 
 PRINT myvar
+
+# 14

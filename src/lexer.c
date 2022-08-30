@@ -76,7 +76,7 @@ void lex(valera_array_t* tokenized, valera_array_t* out) {
       );
     }else if(strlen(token)<=1 && strchr(TOKENS, token[0])) {
       if(token[0]=='#') {
-        printf("Comment!\n");
+        // printf("Comment!\n");
         
         idx++;
         while(token[0]!='\n') {

@@ -88,7 +88,7 @@ void execute(char* filename, ClixContext* ctx, valera_array_t* actions) {
       valera_value_set_number(_, 0);
       initalize_variable(ctx, valera_get(elem, "token")->str, _);
       
-      VPRINTARR("Context dump: ", ctx->variables);
+      // VPRINTARR("Context dump: ", ctx->variables);
     }else if(action==ACL_ADD) {
       char* vname = valera_get(elem, "tok1")->str;
       NOTFOUND;
