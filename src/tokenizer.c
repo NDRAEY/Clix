@@ -17,7 +17,7 @@ void tokenize(const char* code, valera_array_t* tokenized) {
 		if(exists) {
 			int splen = valera_array_length(sptokens);
 			if(splen) {
-				char* collected = malloc(valera_array_join_size(sptokens, "")+1); // Don't forget to free it!
+				char* collected = calloc(valera_array_join_size(sptokens, "")+1, sizeof(char)); // Don't forget to free it!
 				if(collected==NULL) {
 					printf("error: malloc() failed! (%s:%d)\n", __FILE__, __LINE__);
 					exit(1);
@@ -44,7 +44,7 @@ void tokenize(const char* code, valera_array_t* tokenized) {
 			
 			char* one = malloc(2);
 			one[0] = elm;
-			one[1] = '\0';
+			one[1] = 0;
 
 			if(elm=='\n') { line++; }
 			
