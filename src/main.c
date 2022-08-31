@@ -27,7 +27,7 @@ int main(int argc, char** argv) {
 	
 	valera_array_t* tokenized = valera_array_new();
 	tokenize(buffer, tokenized);
-	// VPRINTARR("Tokenized: ", tokenized);
+	//VPRINTARR("Tokenized: ", tokenized);
 	
 	valera_array_t* lexed = valera_array_new();
 	lex(tokenized, lexed);
@@ -37,7 +37,7 @@ int main(int argc, char** argv) {
 	
 	valera_array_t* actionlist = valera_array_new();
 	make_actionlist(file, lexed, actionlist);
-	VPRINTARR("Action list: ", actionlist);
+	//VPRINTARR("Action list: ", actionlist);
 	
 	ClixContext ctx = make_context();
 	execute(file, &ctx, actionlist);

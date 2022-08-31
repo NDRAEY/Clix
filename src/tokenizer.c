@@ -19,14 +19,10 @@ void tokenize(const char* code, valera_array_t* tokenized) {
 			if(splen) {
 				char* collected = calloc(valera_array_join_size(sptokens, "")+1, sizeof(char)); // Don't forget to free it!
 				if(collected==NULL) {
-					printf("error: malloc() failed! (%s:%d)\n", __FILE__, __LINE__);
+					printf("error: calloc() failed! (%s:%d)\n", __FILE__, __LINE__);
 					exit(1);
 				}
 				valera_array_join(sptokens, collected, "");
-				
-				// VPRINTARR("ARR: ", sptokens);
-				// printf("Col: %s\n", collected);
-				//valera_array_push_string(tokenized, collected);
 				
 				valera_node_t* obj = valera_new();
 				valera_push_string(obj, "token", collected);
