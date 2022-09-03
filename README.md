@@ -1,12 +1,11 @@
+![HyperPkg](res/Clix.png)
+
 # Clix
 
 Clix - the simpest portable interpreter!
 
 It uses OS' standard library and ValeraC.
 
-# Warning
-
-Clix fails on x86 systems, i'm fixing that.
 # Build
 
 Install dependcies
@@ -30,4 +29,18 @@ mkdir build
 cd build
 cmake ..
 make -j4
+```
+
+You will get `clix` executable.
+
+# Examples
+
+See `examples` folder.
+
+# Run
+
+In build folder (not installed):
+
+```bash
+./clix <program>
 ```
