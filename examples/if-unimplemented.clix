@@ -1,6 +1,6 @@
 DEFINE a
 SET a, 5
 
-IF "HELLO" LESS a
-  PRINT "IS"
+IF a IS 5
+  PRINT "OKAY!"
 END

@@ -170,7 +170,7 @@ void execute(char* filename, ClixContext* ctx, valera_array_t* actions) {
       // GEQ - GREATER OR EQUAL
       // NEQ - NOT EQUAL
       
-      if(strcmp(comp, "EQ")==0) {
+      if(strcmp(comp, "EQ")==0 || strcmp(comp, "IS")==0) {
         if(wt==LEX_NAME) {
           ClixVariableType vtyp = get_variable_type(ctx, what);
           if(vtyp==VAR_NUMBER) {

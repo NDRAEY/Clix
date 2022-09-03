@@ -10,10 +10,11 @@ const char* keywords[] = {
   "MUL",    "mul",
   "DIV",    "div",
   "PRINT",  "print",
-  "IF",     "if"
+  "IF",     "if",
+  "CALL",   "call"
 };
 
-unsigned int dictlen = 16;
+unsigned int dictlen = 18;
 
 int isin(const char* str, const char* dict[], unsigned int dictlen) {
   for(unsigned int i=0; i<dictlen; i++) {
