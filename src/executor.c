@@ -157,7 +157,7 @@ void execute(char* filename, ClixContext* ctx, valera_array_t* actions) {
       char* comp = valera_get(elem, "tok2")->str;
       char* with = valera_get(elem, "tok3")->str;
       ClixLexType wit = valera_get(elem, "typ3")->num;
-      
+
       valera_array_t* execode = valera_get(elem, "tokens")->arr;
       
       if(wt==LEX_NAME) {
