@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.11)
 
-project(clix VERSION 0.0.3)
+project(clix VERSION 0.0.5)
 
 set(CMAKE_C_FLAGS "-ggdb -Wall -O0") # Will be removed after version 1.0
 

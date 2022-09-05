@@ -11,7 +11,7 @@ const char* keywords[] = {
   "DIV",    "div",
   "PRINT",  "print",
   "IF",     "if",
-  "CALL",   "call"
+  "EXTERN", "extern"
 };
 
 unsigned int dictlen = 18;
