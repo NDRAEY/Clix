@@ -15,7 +15,8 @@ typedef enum ClixActions {
   ACL_XOR,
   ACL_NOT,
   ACL_IF,
-  ACL_PRINT
+  ACL_PRINT,
+  ACL_CALL
 } ClixActions;
 
 void make_actionlist(char* filename, valera_array_t* lexed, valera_array_t* out);

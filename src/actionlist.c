@@ -43,6 +43,17 @@ valera_node_t* acl_gen_object2(ClixActions action, char* t1, char* t2,
   return obj;
 }
 
+valera_node_t* acl_gen_object_array(ClixActions action, char* t1, ClixLexType p1,
+                                    valera_array_t* array, int line) {
+  valera_node_t* obj = valera_new();
+  valera_push_number(obj, "action", action);
+  valera_push_string(obj, "tok1", t1);
+  valera_push_number(obj, "typ1", p1);
+  valera_push_array(obj, "tokens", array);
+  valera_push_number(obj, "line", line);
+  return obj;
+}
+
 void make_actionlist(char* filename, valera_array_t* lexed, valera_array_t* out) {
   unsigned int idx = 0;
   
@@ -183,6 +194,42 @@ void make_actionlist(char* filename, valera_array_t* lexed, valera_array_t* out)
         );
         
         idx++; continue;
+      }else if(strcmp(token, "CALL")==0 || strcmp(token, "call")==0) {
+       	idx++; INCORERR;
+      	char* funcname = valera_get(valera_array_get(lexed, idx)->obj, "token")->str;
+        ClixLexType fntype = valera_get(valera_array_get(lexed, idx)->obj, "type")->num;
+        
+        //printf("Funcname is: %s\n", funcname);
+        
+        valera_array_t* funcargs = valera_array_new();
+        while(1) {
+          idx++; INCORERR;
+          
+          char* tkn = valera_get(valera_array_get(lexed, idx)->obj, "token")->str;
+          
+          if(strcmp(tkn, "\n")==0) break;
+          if(strcmp(tkn, " ")==0) continue;
+          if(strcmp(tkn, ",")==0) continue;
+          
+          //printf("Token: %s\n", tkn);
+          
+          valera_array_push_string(funcargs, tkn);
+        }
+        
+        //VPRINTARR("Args: ", funcargs);
+        
+        valera_array_push_object(
+          out,
+          acl_gen_object_array(
+            ACL_CALL,
+            funcname,
+            fntype,
+            funcargs,
+            line
+          )
+        );
+
+      	//exit(1);
       }
     }else{
       if(strcmp(token, "\n")!=0) {

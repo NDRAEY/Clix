@@ -1,5 +1,5 @@
-EXTERN test
-EXTERN test_args4 1, 2, 3, 4
+CALL test_args4, 1, 2, 3, 4
+CALL test
 
-# Wrong
-EXTERN test_args4 1, 2, 3
+# Wrong at runtime
+CALL test_args4, 1, 2, 3
