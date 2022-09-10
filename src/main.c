@@ -2,8 +2,17 @@
 #include <stdlib.h>
 #include "../include/global.h"
 
-void test_args4(valera_array_t* args) {
+void test_args4(ClixContext* ctx, valera_array_t* args) {
+	printf("Hello, from the C function!\n\n");
 	VPRINTARR("Arguments: ", args);
+
+	/*
+	char is = variable_exists(ctx, "hyv");
+	if(is) {
+		valera_value_t* val = get_variable_value(ctx, "hyv");
+		valera_value_set_string(val, "Carol? Are you ok?");
+	}
+	*/
 }
 
 ClixFFIFunction test_args4_ffi = {

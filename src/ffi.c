@@ -8,7 +8,7 @@ ClixFFIFunction* find_FFI_func(ClixContext* ctx, char* name) {
     
     char* elname = valera_get(elem, "name")->str;
     int argc = valera_get(elem, "argc")->num;
-    void (*elfunc)(valera_array_t*) = (void*)(valera_array_t*)valera_get(elem, "func")->str;
+    void (*elfunc)(ClixContext*, valera_array_t*) = (void*)(valera_array_t*)valera_get(elem, "func")->str;
     
     if(strcmp(elname, name)==0) {
       return &(ClixFFIFunction){
@@ -24,7 +24,7 @@ void add_FFI_func(ClixContext* ctx, ClixFFIFunction* func) {
   
   valera_push_string(obj, "name", func->name);
   valera_push_number(obj, "argc", func->argc);
-  valera_push_string(obj, "func", (void*)(valera_array_t*)func->func);
+  valera_push_string(obj, "func", (char*)func->func);
   
   valera_array_push_object(ctx->cfuncs, obj);
 }

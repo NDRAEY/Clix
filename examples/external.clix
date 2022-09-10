@@ -1,9 +1,9 @@
 # Arguments are passed via valera_array_t* type
 # Example: void my_ffi_func(valera_array_t* args) { ... }
-
 # For this example, "test_args4" defined at main.c of Clix.
 
-DEFINE var1
-SET var1, 256
+DEFINE hyv
 
-CALL test_args4, var1, "Hello, Valery!", 4933, "Carol Tea"
+CALL test_args4, "Carol Tea", "Hyvää ilta, Valery!", 1, 2, 3
+
+PRINT hyv

@@ -425,7 +425,7 @@ void execute(char* filename, ClixContext* ctx, valera_array_t* actions) {
         clix_error(filename, valera_get(elem, "line")->num, -1, -1, "Function '%s' not found!", fname);
         exit(1);
       }
-      func->func(fargs);
+      func->func(ctx, fargs);
       
       valera_array_destroy(fargs);
       //exit(1);
