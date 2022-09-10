@@ -222,9 +222,11 @@ void make_actionlist(char* filename, valera_array_t* lexed, valera_array_t* out)
         
         valera_array_t* funcargs = valera_array_new();
         while(1) {
-          idx++; INCORERR;
+          idx++;
+          if(idx>=len) break; // INCORERR;
           
           char* tkn = valera_get(valera_array_get(lexed, idx)->obj, "token")->str;
+          ClixLexType ttype = valera_get(valera_array_get(lexed, idx)->obj, "type")->num;
           
           if(strcmp(tkn, "\n")==0) break;
           if(strcmp(tkn, " ")==0) continue;
@@ -232,7 +234,11 @@ void make_actionlist(char* filename, valera_array_t* lexed, valera_array_t* out)
           
           //printf("Token: %s\n", tkn);
           
-          valera_array_push_string(funcargs, tkn);
+          valera_node_t* tot = valera_new();
+          valera_push_string(tot, "token", tkn);
+          valera_push_number(tot, "type", ttype);
+          
+          valera_array_push_object(funcargs, tot);
         }
         
         //VPRINTARR("Args: ", funcargs);

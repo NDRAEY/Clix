@@ -1,5 +1,9 @@
-CALL test_args4, 1, 2, 3, 4
-CALL test
+# Arguments are passed via valera_array_t* type
+# Example: void my_ffi_func(valera_array_t* args) { ... }
 
-# Wrong at runtime
-CALL test_args4, 1, 2, 3
+# For this example, "test_args4" defined at main.c of Clix.
+
+DEFINE var1
+SET var1, 256
+
+CALL test_args4, var1, "Hello, Valery!", 4933, "Carol Tea"

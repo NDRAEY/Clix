@@ -2,6 +2,14 @@
 #include <stdlib.h>
 #include "../include/global.h"
 
+void test_args4(valera_array_t* args) {
+	VPRINTARR("Arguments: ", args);
+}
+
+ClixFFIFunction test_args4_ffi = {
+	"test_args4", 3, test_args4
+};
+
 int main(int argc, char** argv) {
 	if(argc<=1) {
 		printf("Usage: clix file\n");
@@ -40,6 +48,9 @@ int main(int argc, char** argv) {
 	// VPRINTARR("Action list: ", actionlist);
 	
 	ClixContext ctx = make_context();
+
+	add_FFI_func(&ctx, &test_args4_ffi);
+	
 	execute(file, &ctx, actionlist);
 
 	valera_array_destroy(tokenized);

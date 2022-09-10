@@ -1,6 +1,26 @@
 #include "../include/global.h"
 #include <stdlib.h>
 
+#define NOTFOUND if(!variable_exists(ctx, vname)) { \
+  clix_error(filename, valera_get(elem, "line")->num, -1, -1, "Variable '%s' not found!", vname); \
+  exit(1);\
+}
+
+#define NOTFOUND_(vn) if(!variable_exists(ctx, vn)) { \
+  clix_error(filename, valera_get(elem, "line")->num, -1, -1, "Variable '%s' not found!", vn); \
+  exit(1);\
+}
+
+#define NOTFOUND__(elem, vn) if(!variable_exists(ctx, vn)) { \
+  clix_error(filename, valera_get(elem, "line")->num, -1, -1, "Variable '%s' not found!", vn); \
+  exit(1);\
+}
+
+#define NUMEXC if(get_variable_type(ctx, vname)==VAR_STRING) { \
+  printf("\033[31mERROR\033[0m: RuntimeError: Excepted number, but variable type is string!\n"); \
+  exit(1); \
+}
+
 ClixContext make_context() {
   ClixContext obj;
   obj.variables = valera_array_new();
@@ -57,19 +77,56 @@ ClixVariableType get_variable_type(ClixContext *ctx, char* name) {
   return valera2clixVT(val->type);
 }
 
-#define NOTFOUND if(!variable_exists(ctx, vname)) { \
-  clix_error(filename, valera_get(elem, "line")->num, -1, -1, "Variable '%s' not found!", vname); \
-  exit(1);\
+valera_array_t* filter_args(valera_array_t* args) {
+  valera_array_t* new = valera_array_new();
+  
+  for(int i=0, argslen=valera_array_length(args); i<argslen; i++) {
+    valera_array_push(new, valera_get(valera_array_get(args, i)->obj, "token"));
+  }
+  
+  valera_array_destroy(args);
+  return new;
 }
 
-#define NOTFOUND_(vn) if(!variable_exists(ctx, vn)) { \
-  clix_error(filename, valera_get(elem, "line")->num, -1, -1, "Variable '%s' not found!", vn); \
-  exit(1);\
-}
-
-#define NUMEXC if(get_variable_type(ctx, vname)==VAR_STRING) { \
-  printf("\033[31mERROR\033[0m: RuntimeError: Excepted number, but variable type is string!\n"); \
-  exit(1); \
+// Makes new array with values extracted from variables, skipping other values
+valera_array_t* eval_variables_over(char* filename, ClixContext* ctx, valera_array_t* array) {
+  valera_array_t* new = valera_array_new();
+  
+  int arl = valera_array_length(array);
+  
+  for(int i=0; i<arl; i++) {
+    valera_node_t* curobj = valera_array_get(array, i)->obj;
+    char* arg = valera_get(curobj, "token")->str;
+    ClixLexType argtype = valera_get(curobj, "type")->num;
+    
+    if(argtype==LEX_NAME) {
+      NOTFOUND__(curobj, arg);
+      valera_value_t* var = get_variable_value(ctx, arg);
+      
+      valera_node_t* obj = valera_new();
+      valera_push(obj, "token", var);
+      valera_push_number(obj, "type", var->type==VAL_NUM?LEX_NUMBER:(var->type==VAL_STR?LEX_STRING:LEX_NAME));
+      
+      valera_array_push_object(new, obj);
+    }else{
+      valera_node_t* preparer = valera_new();
+      
+      if(argtype==LEX_NUMBER) {
+        valera_push_number(preparer, "token", atoi(arg));
+      }else if(argtype==LEX_STRING) {
+        valera_push_string(preparer, "token", arg);
+      }else{
+        printf("[Clix] Other types?\n");
+      }
+      valera_push_number(preparer, "type", argtype);
+      
+      valera_array_push_object(new, preparer);
+    }
+  }
+  
+  valera_array_destroy(array);
+  
+  return new;
 }
 
 void execute(char* filename, ClixContext* ctx, valera_array_t* actions) {
@@ -349,9 +406,29 @@ void execute(char* filename, ClixContext* ctx, valera_array_t* actions) {
       
       printf("[WARN] IF is not fully implemented!\n");
     }else if(action==ACL_CALL) {
-      printf("NOT YET UNIMPLEMENTED (CALL)\n\n");
-      VPRINT("", elem);
-      exit(1);
+      //0rintf("NOT YET IMPLEMENTED (CALL)\n\n");
+      
+      char* fname = valera_get(elem, "tok1")->str;
+      valera_array_t* fargs = valera_get(elem, "tokens")->arr;
+      
+      //printf("Function name: %s\n", fname);
+      
+      fargs = eval_variables_over(filename, ctx, fargs);
+      //VPRINTARR("Function arguments: ", fargs);
+
+      fargs = filter_args(fargs);
+      //VPRINTARR("Function arguments: ", fargs);
+      
+      //void (*func)(valera_array_t*) = find_FFI_func(ctx, fname);
+      ClixFFIFunction* func = find_FFI_func(ctx, fname);
+      if(func==0) {
+        clix_error(filename, valera_get(elem, "line")->num, -1, -1, "Function '%s' not found!", fname);
+        exit(1);
+      }
+      func->func(fargs);
+      
+      valera_array_destroy(fargs);
+      //exit(1);
     }else{
       printf("Unimpelemented functions found! => %s (%d)\n", acl_to_string(action), action);
       exit(1);

@@ -10,6 +10,7 @@
 #include "actions.h"
 #include "executor.h"
 #include "error.h"
+#include "ffi.h"
 
 #define VPRINT(text, obj) printf(text); valera_print(obj); puts("");
 #define VPRINTARR(text, obj) printf(text); valera_array_print(obj); puts("");
