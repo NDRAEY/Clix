@@ -54,6 +54,25 @@ valera_node_t* acl_gen_object_array(ClixActions action, char* t1, ClixLexType p1
   return obj;
 }
 
+char* acl_to_string(enum ClixActions action) {
+  if(action==ACL_DEFINE) return (char*)"DEFINE";
+  if(action==ACL_SET) return (char*)"SET";
+  if(action==ACL_ADD) return (char*)"ADD";
+  if(action==ACL_SUB) return (char*)"SUB";
+  if(action==ACL_MUL) return (char*)"MUL";
+  if(action==ACL_DIV) return (char*)"DIV";
+  if(action==ACL_SHR) return (char*)"SHR";
+  if(action==ACL_SHL) return (char*)"SHL";
+  if(action==ACL_AND) return (char*)"AND";
+  if(action==ACL_OR) return (char*)"OR";
+  if(action==ACL_XOR) return (char*)"XOR";
+  if(action==ACL_NOT) return (char*)"NOT";
+  if(action==ACL_IF) return (char*)"IF";
+  if(action==ACL_PRINT) return (char*)"PRINT";
+  if(action==ACL_CALL) return (char*)"CALL";
+  return (char*)"UNKNOWN";
+}
+
 void make_actionlist(char* filename, valera_array_t* lexed, valera_array_t* out) {
   unsigned int idx = 0;
   

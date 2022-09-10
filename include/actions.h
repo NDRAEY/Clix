@@ -19,6 +19,7 @@ typedef enum ClixActions {
   ACL_CALL
 } ClixActions;
 
+char* acl_to_string(enum ClixActions action);
 void make_actionlist(char* filename, valera_array_t* lexed, valera_array_t* out);
 
 #endif

@@ -163,7 +163,7 @@ void execute(char* filename, ClixContext* ctx, valera_array_t* actions) {
       if(wt==LEX_NAME) {
         NOTFOUND_(what);
       }
-      // EQ - EQUAL
+      // EQ/IS - EQUAL
       // LESS - LESS
       // GREATER - GREATER
       // LEQ - LESS OR EQUAL
@@ -348,9 +348,12 @@ void execute(char* filename, ClixContext* ctx, valera_array_t* actions) {
       }
       
       printf("[WARN] IF is not fully implemented!\n");
-      //exit(1);
+    }else if(action==ACL_CALL) {
+      printf("NOT YET UNIMPLEMENTED (CALL)\n\n");
+      VPRINT("", elem);
+      exit(1);
     }else{
-      printf("Unimpelemented functions found!\n");
+      printf("Unimpelemented functions found! => %s (%d)\n", acl_to_string(action), action);
       exit(1);
     }
     
