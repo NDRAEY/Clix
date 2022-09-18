@@ -16,7 +16,8 @@ typedef enum ClixActions {
   ACL_NOT,
   ACL_IF,
   ACL_PRINT,
-  ACL_CALL
+  ACL_CALL,
+  ACL_WHILE
 } ClixActions;
 
 char* acl_to_string(enum ClixActions action);
