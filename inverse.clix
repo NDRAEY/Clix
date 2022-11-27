@@ -1,0 +1,5 @@
+DEFINE test
+
+SUB test, 11
+
+PRINT test

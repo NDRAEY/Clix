@@ -6,4 +6,6 @@ DEFINE hyv
 
 CALL test_args4, "Carol Tea", "Hyvää ilta, Valery!", 1, 2, 3
 
+SET hyv, "Hello World!"
+
 PRINT hyv

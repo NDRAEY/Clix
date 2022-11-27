@@ -64,6 +64,7 @@ int main(int argc, char** argv) {
 
 	valera_array_destroy(tokenized);
 	valera_array_destroy(lexed);
+	valera_array_destroy(actionlist);
 	destroy_context(ctx);
 	
 	return 0;
