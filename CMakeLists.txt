@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.11)
 
 project(clix VERSION 0.0.8)
 
-set(CMAKE_C_FLAGS "-ggdb -Wall -O0") # Will be removed after version 1.0
+set(CMAKE_C_FLAGS "-ggdb -Wall -O3") # Will be removed after version 1.0
 
 set(OUTPUT clix)
 set(LIBFILES src/tokenizer.c src/lexer.c src/actionlist.c

@@ -1,0 +1,18 @@
+DEFINE a
+
+SET a, 72
+
+IF a EQ 72
+	PRINT "a==72"
+END
+
+SET a, 63
+PRINT "a = 63"
+
+IF a LESS 64
+	PRINT "a<64"
+END
+
+IF a GREATER 52
+	PRINT "a>52"
+END

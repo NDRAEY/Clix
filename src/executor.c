@@ -430,6 +430,9 @@ void execute(char* filename, ClixContext* ctx, valera_array_t* actions) {
       
       valera_array_destroy(fargs);
       //exit(1);
+    }else if(action==ACL_WHILE) {
+    	printf("Cannot use while loop when IF statement is not optimized!!!\n");
+    	exit(1);
     }else{
       printf("Unimpelemented functions found! => %s (%d)\n", acl_to_string(action), action);
       exit(1);

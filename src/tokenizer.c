@@ -76,7 +76,7 @@ void tokenize(const char* code, valera_array_t* tokenized) {
 				valera_array_push_object(tokenized, obj);
 				idx++; continue;
 			}
-			
+
 			valera_node_t* obj = valera_new();
 			valera_push_string(obj, "token", one);
 			valera_push_number(obj, "start", idx);
@@ -88,6 +88,7 @@ void tokenize(const char* code, valera_array_t* tokenized) {
 			//valera_array_push_string(tokenized, one);			
 		} else {
 			//printf("Pushing token: %c\n", elm);
+			
 			char* one = malloc(2);
 			one[0] = elm;
 			one[1] = '\0';
