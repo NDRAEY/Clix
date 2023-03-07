@@ -1,4 +1,6 @@
-![HyperPkg](res/Clix.png)
+WARNING: Project is not maintained!
+
+![Clix](res/Clix.png)
 
 # Clix
 
